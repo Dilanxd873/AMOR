@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navegación con Botón y Música</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #282c34;
+            color: white;
+        }
+        section {
+            display: none; /* Ocultar secciones por defecto */
+            padding: 50px;
+        }
+        #inicio {
+            display: block; /* Mostrar solo la primera sección inicialmente */
+        }
+        .boton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .boton:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para el corazón */
+        .hearth {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 50px auto;
+            transform: rotate(-45deg);
+            background-color: red;
+            animation: palpitar 1s infinite alternate;
+        }
+
+        .hearth::before,
+        .hearth::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .hearth::before {
+            top: -75px;
+            left: 0;
+        }
+
+        .hearth::after {
+            left: 75px;
+            top: 0;
+        }
+
+        @keyframes palpitar {
+            0% {
+                transform: rotate(-45deg) scale(1);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(-45deg) scale(1);
+            }
+        }
+
+        h1, h2 {
+            color: white;
+        }
+
+        /* Estilo para botón esquivo */
+        .esquivo {
+            position: relative;
+        }
+
+        /* Estilos para el ahorcado */
+        #ahorcado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #palabra {
+            font-size: 24px;
+            letter-spacing: 5px;
+        }
+
+        #letras {
+            margin-top: 20px;
+        }
+
+        .letra {
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .letra:hover {
+            color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón para reproducir música -->
+    <button class="boton" onclick="document.getElementById('musica-fondo').play()">Reproducir Música</button>
+
+    <!-- Reproductor de música de fondo -->
+    <audio id="musica-fondo" loop>
+        <source src="New_West_-_Those_Eyes_CeeNaija.com_.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Primera sección -->
+    <section id="inicio">
+        <h1>Bienvenido</h1>
+        <p>Haz clic en el botón para ir a la siguiente sección.</p>
+        <button class="boton" onclick="mostrarSegundaSeccion()">Siguiente</button>
+        <button class="boton" onclick="mostrarTerceraSeccion()">Ir a Tercera Sección</button>
+        <button class="boton" onclick="mostrarCuartaSeccion()">Ir a Cuarta Sección</button>
+    </section>
+
+    <!-- Segunda sección con una imagen -->
+    <section id="imagen">
+        <h1>Segunda Sección</h1>
+        <img src="dead.jpg" alt="Ejemplo de imagen" width="400">
+        <p>Esta es la segunda sección con una imagen.</p>
+        <button class="boton" onclick="mostrarPrimeraSeccion()">Regresar</button>
+        <button class="boton" onclick="mostrarTerceraSeccion()">Ir a Tercera Sección</button>
+        <button class="boton" onclick="mostrarCuartaSeccion()">Ir a Cuarta Sección</button>
+    </section>
+
+    <!-- Tercera sección con corazón animado y texto -->
+    <section id="tercera" style="background-color: #000; color: white;">
+        <h1>Tercera Sección</h1>
+        <div class="hearth"></div>
+        <div class="contenido">
+            <h1>¡Te quiero mucho!</h1>
+        </div>
+        <button class="boton" onclick="mostrarPrimeraSeccion()">Regresar a la Primera</button>
+        <button class="boton" onclick="mostrarSegundaSeccion()">Regresar a la Segunda</button>
+        <button class="boton" onclick="mostrarCuartaSeccion()">Ir a Cuarta Sección</button>
+    </section>
+
+    <!-- Cuarta sección con propuesta -->
+    <section id="cuarta" style="background-color: #333; color: white;">
+        <h1>Cuarta Sección</h1>
+        <h2>¿Quieres salir conmigo?</h2>
+        <button class="boton" onclick="mostrarAhorcado()">Sí</button>
+        <button class="boton esquivo" id="boton-esquivo">O</button>
+        <br>
+        <button class="boton" onclick="mostrarPrimeraSeccion()">Regresar a la Primera</button>
+    </section>
+
+    <!-- Sección de ahorcado -->
+    <section id="ahorcado" style="display: none;">
+        <h1>Juego del Ahorcado</h1>
+        <div id="palabra">_ _ _ _ _ _ _</div>
+        <div id="letras"></div>
+        <p id="mensaje"></p>
+    </section>
+
+    <script>
+        function mostrarSegundaSeccion() {
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('imagen').style.display = 'block';
+            document.getElementById('tercera').style.display = 'none';
+            document.getElementById('cuarta').style.display = 'none';
+            document.getElementById('ahorcado').style.display = 'none';
+        }
+
+        function mostrarPrimeraSeccion() {
+            document.getElementById('imagen').style.display = 'none';
+            document.getElementById('inicio').style.display = 'block';
+            document.getElementById('tercera').style.display = 'none';
+            document.getElementById('cuarta').style.display = 'none';
+            document.getElementById('ahorcado').style.display = 'none';
+        }
+
+        function mostrarTerceraSeccion() {
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('imagen').style.display = 'none';
+            document.getElementById('tercera').style.display = 'block';
+            document.getElementById('cuarta').style.display = 'none';
+            document.getElementById('ahorcado').style.display = 'none';
+        }
+
+        function mostrarCuartaSeccion() {
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('imagen').style.display = 'none';
+            document.getElementById('tercera').style.display = 'none';
+            document.getElementById('cuarta').style.display = 'block';
+            document.getElementById('ahorcado').style.display = 'none';
+        }
+
+        function mostrarAhorcado() {
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('imagen').style.display = 'none';
+            document.getElementById('tercera').style.display = 'none';
+            document.getElementById('cuarta').style.display = 'none';
+            document.getElementById('ahorcado').style.display = 'block';
+            iniciarAhorcado();
+        }
+
+        const botonEsquivo = document.getElementById('boton-esquivo');
+
+        botonEsquivo.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - botonEsquivo.offsetWidth);
+            const y = Math.random() * (window.innerHeight - botonEsquivo.offsetHeight);
+            botonEsquivo.style.position = 'absolute';
+            botonEsquivo.style.left = `${x}px`;
+            botonEsquivo.style.top = `${y}px`;
+        });
+
+        function iniciarAhorcado() {
+            const palabra = "AGUACATE";
+            const letrasUsadas = new Set();
+            let intentos = 6;
+            const palabraDiv = document.getElementById("palabra");
+            const letrasDiv = document.getElementById("letras");
+            const mensajeDiv = document.getElementById("mensaje");
+
+            function actualizarPalabra() {
+                palabraDiv.textContent = palabra.split('').map(letra => letrasUsadas.has(letra) ? letra : '_').join(' ');
+            }
+
+            function generarBotones() {
+                letrasDiv.innerHTML = '';
+                for (let i = 65; i <= 90; i++) {
+                    const letra = String.fromCharCode(i);
+                    const boton = document.createElement("button");
+                    boton.textContent = letra;
+                    boton.className = "letra";
+                    boton.onclick = () => manejarIntento(letra);
+                    letrasDiv.appendChild(boton);
+                }
+            }
+
+            function manejarIntento(letra) {
+                if (letrasUsadas.has(letra)) return;
+                letrasUsadas.add(letra);
+                if (palabra.includes(letra)) {
+                    actualizarPalabra();
+                    if (!palabraDiv.textContent.includes('_')) {
+                        mensajeDiv.textContent = "¡Ganaste! 🎉";
+                        letrasDiv.innerHTML = '';
+                    }
+                } else {
+                    intentos--;
+                    if (intentos === 0) {
+                        mensajeDiv.textContent = "Perdiste. La palabra era " + palabra;
+                        letrasDiv.innerHTML = '';
+                    }
+                }
+            }
+
+            actualizarPalabra();
+            generarBotones();
+        }
+    </script>
+</body>
+</html>
